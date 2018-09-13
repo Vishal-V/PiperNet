@@ -17,6 +17,6 @@ Put even simpler — `it’s a completely free, private and decentralized social
 3. **Privacy** : You own your data and all the content you produce!  
 It is so simple, yet so very beautiful! 
 
-![ALT-Text](https://github.com/Vishal-V/decentralized-social-network/blob/ER_Diagram/ER%20Diagrams/Screenshot%20(63).png)
+![ALT-Text](https://github.com/Vishal-V/decentralized-social-network/blob/ER_Diagram/ER%20Diagrams/Foundation.png)
 
 
