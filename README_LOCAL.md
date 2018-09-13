@@ -21,9 +21,9 @@ It is so simple, yet so very beautiful!
 ![ALT-Text](screenshot.png)
 
 #
-##Technical Specifications
+## Technical Specifications
 
-####Hardware required (Server):
+#### Hardware required (Server):
 - System with atleast Intel core i3 processor or similar, multicore.
 - As much RAM as possible.
 - NOT a virtual machine or emulated device.
@@ -44,16 +44,16 @@ It is so simple, yet so very beautiful!
 - Internet connection with minimum speed of 1mbps.
 - 4 GB RAM, 512 MB free.
 
-####Software required (User):
+#### Software required (User):
 - Etherium core
 - Etherium Wallet (Recommended)
 - **Decentra** application
 - Java (JDK8 or above)
 
 #
-##Project Specifications
+## Project Specifications
 
-####Languages and Frameworks used:
+#### Languages and Frameworks used:
 - Python 3.*
 - Flask / Django
 - Javascript
@@ -62,15 +62,15 @@ It is so simple, yet so very beautiful!
 - React Native
 - MongoDB / postgreSQL
 
-####Inspiration:
+#### Inspiration:
 - Facebook Scam
 - BlockChain Technology
 
-####References:
+#### References:
 - Online course fragments
 - Research papers on Consensus Algorithms
 
-####Future of Decentra:
+#### Future of Decentra:
 - Private blockchain, independent of the Etherium Blockchain.
 - Lesser dependencies for the end user - just install the application!
 - Few features offered by most social sites today.
