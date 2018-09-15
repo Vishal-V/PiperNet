@@ -58,5 +58,3 @@
 - Private blockchain, independent of the Ethereum Blockchain.
 - Lesser dependencies for the end user - just install the application!
 - Few features offered by most social sites today.
-
-![ALT-TEXT](Resources/Pod.png)
