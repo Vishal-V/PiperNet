@@ -58,3 +58,6 @@
 - Private blockchain, independent of the Ethereum Blockchain.
 - Lesser dependencies for the end user - just install the application!
 - Few features offered by most social sites today.
+
+#### This is how the decentralized pod network looks v/s the centralized ones!
+![ALT-TEXT](Resources/Pod.png)
