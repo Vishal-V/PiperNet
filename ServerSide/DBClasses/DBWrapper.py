@@ -5,6 +5,7 @@ class DBWrapper:
     db = psycopg2.connect(database="postgres", user="postgres", password="abcd1234", host="127.0.0.1", port=5432)
     db.set_session(autocommit=True)
     cursor = db.cursor()
+    print("Executed")
 
     def __init__(self):
         if DBWrapper.db.closed:

@@ -1,4 +1,6 @@
 from flask import *
+from ServerSide.DBClasses.User import User
+
 
 app = Flask("__app__", template_folder='Site')
 
@@ -16,15 +18,18 @@ def login():
     else:
         data = request.args
 
-    print(data)
-    if "un" in data:
-        if data["un"] == "test":
-            return make_response(jsonify({'text': "Failure"}), 200)
+    if "username" in data:
+        user = User.fetch(data["username"])
+        print(user)
+        if user is None:
+            return make_response(jsonify({'text': "No user with username: " + data["username"]}), 200)
+        elif data["password"] != user.password:
+            return make_response(jsonify({'text': "Wrong password"}), 200)
+        else:
+            return make_response(jsonify({'text': "Logged in successfully"}), 200)
 
-    else:
-        print("absent")
 
-    return make_response(jsonify({'text': "Failure"}), 200)
+    return make_response(jsonify({'text': "Failure"}), 400)
 
 
 app.run("0.0.0.0", 8080)

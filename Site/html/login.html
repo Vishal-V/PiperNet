@@ -32,11 +32,11 @@
         </a>
 
         <div class="form-group">
-          <input class="form-control" placeholder="Username">
+          <input class="form-control" placeholder="Username" id="id_username">
         </div>
 
         <div class="form-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Password" id="id_password">
         </div>
 
         <div class="mb-5">
@@ -60,11 +60,11 @@
       $.ajax({
         type: "POST",
         url: "/login",
-        data: JSON.stringify({"un": un, "pw": pass}),
-        success: function (data, textStatus, XmlHttpRequest) {
-            alert("Success");
+        data: JSON.stringify({"username": un, "password": pass}),
+        success: function (data, text, XmlHttpRequest) {
+            alert($.parseJSON(XmlHttpRequest.responseText).text);
         },
-        error: function(data, textStatus, XmlHttpRequest){
+        error: function(data, text, XmlHttpRequest){
             alert("Failure");
         },
         contentType: "application/json",
@@ -75,7 +75,7 @@
 <script>
     window.onload = function () {
         document.getElementById("loginBtn").onclick = function () {
-            login("test", "test")
+            login($("#id_username").val(), $("#id_password").val())
         }
     }
 </script>
