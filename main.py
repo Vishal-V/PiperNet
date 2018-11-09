@@ -7,14 +7,14 @@ from ServerSide.DBClasses.User import User
 from flask_bcrypt import Bcrypt
 
 
-app = Flask("__app__", template_folder='Site')
+app = Flask("__app__")
 app.config['SECRET_KEY'] = 'a551d32359baf371b9095f28d45347c8b8621830'
 bcrypt = Bcrypt(app)
 
 @app.route("/index", methods=['GET'])
 @app.route("/", methods=['GET'])
 def index():
-    return render_template("html/login.html")
+    return render_template("login.html")
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -39,11 +39,11 @@ def login():
 
 @app.route("/home", methods=['GET', 'POST'])
 def timeline():
-    return render_template('html/index.html', title='Home')
+    return render_template('index.html', title='Home')
 
 @app.route("/profile")
 def profile():
-    return render_template('html/profile.html', title='Profile')
+    return render_template('profile.html', title='Profile')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -58,11 +58,11 @@ def register():
         # flash(f'Account created for {form.username.data}! Now log in', 'success')
         #Needs to Auth 
         return redirect(url_for('login'))
-    return render_template('html/register.html', title='Register', form=form)
+    return render_template('register.html', title='Register', form=form)
 
 @app.route("/about")
 def about():
-    return render_template('html/about.html', title='About')
+    return render_template('about.html', title='About')
 
 app.run(debug=True)
 
