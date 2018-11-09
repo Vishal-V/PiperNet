@@ -32,29 +32,39 @@
     </div>
   </div>
 
-<!-- <script>
+<script>
   function login(un, pass){
-      $.ajax({
-        type: "POST",
-        url: "/login",
-        data: JSON.stringify({"username": un, "password": pass}),
-        success: function (data, text, XmlHttpRequest) {
-            alert($.parseJSON(XmlHttpRequest.responseText).text);
-        },
-        error: function(data, text, XmlHttpRequest){
-            alert("Failure");
-        },
-        contentType: "application/json",
-        dataType: 'json'
-    });
+      if(sessionStorage.getItem('username')!==un) {
+          $.ajax({
+              type: "POST",
+              url: "/login",
+              data: JSON.stringify({"username": un, "password": pass}),
+              success: function (data, text, XmlHttpRequest) {
+                  if(data.login_status===0){
+                      alert(data.text);
+                      sessionStorage.setItem('username', un);
+                  }
+              },
+              error: function (data, text, XmlHttpRequest) {
+                  alert("Failure");
+              },
+              contentType: "application/json",
+              dataType: 'json'
+          });
+      }
+      else{
+          alert("Already logged in as "+un);
+      }
   }
 </script>
 <script>
     window.onload = function () {
+        if(sessionStorage.getItem('username')==null)
+            sessionStorage.setItem('username', " ");
         document.getElementById("loginBtn").onclick = function () {
             login($("#id_username").val(), $("#id_password").val())
         }
     }
-</script> -->
+</script>
 
 {% endblock content %}

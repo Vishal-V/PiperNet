@@ -4,7 +4,7 @@ from .DBWrapper import DBWrapper
 class User(DBWrapper):
     TABLE_NAME = "USERS"
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, email):
         super().__init__()
         self.username = username
         self.password = password
@@ -28,7 +28,7 @@ class User(DBWrapper):
         if rec is None:
             return None
 
-        return User(rec[0], rec[1])
+        return User(rec[0], rec[1], rec[2])
 
 
     # Fetch an entry into current object

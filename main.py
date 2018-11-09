@@ -28,11 +28,20 @@ def login():
         user = User.fetch(data["username"])
         print(user)
         if user is None:
-            return make_response(jsonify({'text': "No user with username: " + data["username"]}), 200)
+            return jsonify(
+                text="No user with username: " + data["username"],
+                login_status=-1
+            ), 200
         elif data["password"] != user.password:
-            return make_response(jsonify({'text': "Wrong password"}), 200)
+            return jsonify(
+                text="Wrong password",
+                login_status=1
+            ), 200
         else:
-            return make_response(jsonify({'text': "Logged in successfully"}), 200)
+            return jsonify(
+                text="Logged in successfully",
+                login_status=0
+            ), 200
 
 
     return render_template('login.html', title='Login')
