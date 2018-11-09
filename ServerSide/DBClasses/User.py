@@ -13,7 +13,7 @@ class User(DBWrapper):
     # Push current object onto DB
     def upload(self):
         self.cursor.execute('''
-            INSERT INTO USERS(Username, Password) VALUES (%s, %s);
+            INSERT INTO USERS(username, password) VALUES (%s, %s);
         ''', (self.username, self.password))
 
 
@@ -21,7 +21,7 @@ class User(DBWrapper):
     @staticmethod
     def fetch(username):
         DBWrapper.cursor.execute('''
-            SELECT * FROM USERS WHERE Username=%s;
+            SELECT * FROM USERS WHERE username=%s;
         ''', (username,))
 
         rec = DBWrapper.cursor.fetchone()
@@ -34,7 +34,7 @@ class User(DBWrapper):
     # Fetch an entry into current object
     def fetch_into(self, username):
         self.cursor.execute('''
-            SELECT * FROM USERS WHERE Username=(%s);
+            SELECT * FROM USERS WHERE username=(%s);
         ''', username)
 
         rec = self.cursor.fetchone()
@@ -49,6 +49,9 @@ class User(DBWrapper):
     def create_table():
         DBWrapper.exec_query('''
             create table USERS(
-                
-            )
+                username varchar(15) primary key,
+                password varchar(30) not null,
+                email varchar(20) not null unique,
+                constraint password_length check(length(password)>=8)
+            );
         ''')
