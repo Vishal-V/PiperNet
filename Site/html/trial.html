@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+	{% for i in values %}
+		{{ i.id }}
+		<li>{{ i.username }}</li>
+		<li>{{ i.email }}</li>
+		<li>{{ i.profile_pic }}</li>
+		{% endfor %}
+{% endblock content %}
