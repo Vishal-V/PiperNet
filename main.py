@@ -35,7 +35,8 @@ def login():
             return make_response(jsonify({'text': "Logged in successfully"}), 200)
 
 
-    return make_response(jsonify({'text': "Failure"}), 400)
+    return render_template('login.html', title='Login')
+    # make_response(jsonify({'text': "Failure"}), 400)
 
 @app.route("/home", methods=['GET', 'POST'])
 def timeline():

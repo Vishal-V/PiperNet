@@ -24,9 +24,9 @@
           <li class="nav-item">
             <a class="nav-link" href="/profile">Profile</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="modal" href="#msgModal">Messages</a>
-          </li>
+          </li> -->
           <li class="nav-item active">
             <a class="nav-link" href="/about">About</a>
           </li>
@@ -68,7 +68,7 @@
 
         <ul class="nav navbar-nav hidden-xs-up" id="js-popoverContent">
           <li class="nav-item"><a class="nav-link" href="#" data-action="growl">Notifications</a></li>
-          <li class="nav-item"><a class="nav-link" href="/login">Logout</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Logout</a></li>
         </ul>
       </div>
     </nav>
@@ -121,11 +121,5 @@
       </div>
     </div>
   </div>
-
-  <script src="{{ url_for('static', filename='scripts/jquery.min.js') }}"></script>    
-  <script src="{{ url_for('static', filename='scripts/tether.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='scripts/chart.js') }}"></script>
-  <script src="{{ url_for('static', filename='scripts/toolkit.js') }}"></script>
-  <script src="{{ url_for('static', filename='scripts/application.js') }}"></script>
-    
+  
 {% endblock content %}

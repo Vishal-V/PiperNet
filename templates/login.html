@@ -1,34 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="res/favicon.ico">
+{% extends "layout.html" %}
+{% block content %}
 
-    <title>
-      
-        Login - Decentra
-      
-    </title>
-
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
-    <link href="css/toolkit.css" rel="stylesheet">
-    
-    <link href="css/application.css" rel="stylesheet">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-  </head>
-
-<body>
- 
   <div class="container-fluid container-fill-height">
     <div class="container-content-middle">
       <form role="form" class="mx-auto text-center app-login-form">
 
         <a href="../index.html" class="app-brand mb-5">
-          <img src="res/image_1.jpg" alt="brand">
+          <img src="{{ url_for('static', filename='res/image_1.jpg') }}" alt="brand">
         </a>
 
         <div class="form-group">
@@ -41,21 +19,20 @@
 
         <div class="mb-5">
           <button class="btn btn-secondary" id="loginBtn">
-            <a href="/">Log In</a>
+            <a href="{{ url_for('login') }}">Log In</a>
           </button>
           <button class="btn btn-secondary">
-            <a href="index.html">Sign up</a>
+            <a href="{{ url_for('register') }}">Sign up</a>
           </button>
         </div>
-
         <footer class="screen-login">
           <a href="#" class="text-muted">Forgot password</a>
         </footer>
       </form>
     </div>
-</div>
+  </div>
 
-<script>
+<!-- <script>
   function login(un, pass){
       $.ajax({
         type: "POST",
@@ -78,7 +55,6 @@
             login($("#id_username").val(), $("#id_password").val())
         }
     }
-</script>
-</body>
-</html>
+</script> -->
 
+{% endblock content %}

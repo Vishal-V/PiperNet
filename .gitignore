@@ -1,0 +1,10 @@
+.DS_Store
+.env
+.flaskenv
+*.pyc
+*.pyo
+
+# Flask stuff:
+instance/
+.webassets-cache
+DBWrapper.py
