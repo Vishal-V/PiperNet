@@ -1,9 +1,8 @@
 from .DBWrapper import DBWrapper
-import psycopg2
 
 
 class User(DBWrapper):
-    TABLE_NAME = "USER"
+    TABLE_NAME = "USERS"
 
     def __init__(self, username, password):
         super().__init__()
@@ -13,7 +12,7 @@ class User(DBWrapper):
 
     # Push current object onto DB
     def upload(self):
-        DBWrapper.cursor.execute('''
+        self.cursor.execute('''
             INSERT INTO USERS(Username, Password) VALUES (%s, %s);
         ''', (self.username, self.password))
 
@@ -34,11 +33,11 @@ class User(DBWrapper):
 
     # Fetch an entry into current object
     def fetch_into(self, username):
-        DBWrapper.cursor.execute('''
+        self.cursor.execute('''
             SELECT * FROM USERS WHERE Username=(%s);
         ''', username)
 
-        rec = DBWrapper.cursor.fetchone()
+        rec = self.cursor.fetchone()
         if rec is None:
             return self
         self.username = rec[0]
@@ -46,4 +45,10 @@ class User(DBWrapper):
 
         return self
 
-
+    @staticmethod
+    def create_table():
+        DBWrapper.exec_query('''
+            create table USERS(
+                
+            )
+        ''')
