@@ -3,36 +3,69 @@
 
   <div class="container-fluid container-fill-height">
     <div class="container-content-middle">
-      <form role="form" class="mx-auto text-center app-login-form">
+  
+    <div class="col-md-4"></div>
+    <div class="container col-md-4">
+      <div class="content-section">
+        <br>
+        <form method="POST" action="login">
+          {{ form.hidden_tag() }}
+          <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+              Log In
+            </legend>
 
-        <a href="../index.html" class="app-brand mb-5">
-          <img src="{{ url_for('static', filename='res/image_1.jpg') }}" alt="brand">
-        </a>
+            <div class="form-group">
+              {{ form.email.label(class="form-control-label") }}
+              {% if form.email.errors %}
+                  {{ form.email(class="form-control is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+              {% else %}
+                {{ form.email(class="form-control form-control-lg") }}
+              {% endif %}
+            </div>
 
-        <div class="form-group">
-          <input class="form-control" placeholder="Username" id="id_username">
-        </div>
+            <div class="form-group">
+              {{ form.password.label(class="form-control-label") }}
+              {% if form.password.errors %}
+                {{ form.password(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.password.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.password(class="form-control form-control-lg") }}
+              {% endif %}
+            </div>
+          </fieldset>
 
-        <div class="form-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" id="id_password">
-        </div>
+          <div class="form-group mb-5">
+            {{ form.submit(class="btn btn-secondary") }}
+            <button class="btn btn-secondary" id="register">
+              Sign up
+            </button>
+          </div>
 
-        <div class="mb-5">
-          <button class="btn btn-secondary" id="loginBtn">
-            <a href="{{ url_for('login') }}">Log In</a>
-          </button>
-          <button class="btn btn-secondary">
-            <a href="{{ url_for('register') }}">Sign up</a>
-          </button>
-        </div>
-        <footer class="screen-login">
-          <a href="#" class="text-muted">Forgot password</a>
-        </footer>
       </form>
+        <footer class="screen-login">
+          Forgot Password?  
+          <a href="#" class="">  Reset</a>
+        </footer>
     </div>
   </div>
+<script type="text/javascript">
+  
+  $('#register').click(function() {
+    window.location.href = '{{ url_for('register') }}'
+  })
 
-<script>
+</script>
+<!-- <script>
   function login(un, pass){
       if(sessionStorage.getItem('username')!==un) {
           $.ajax({
@@ -65,6 +98,6 @@
             login($("#id_username").val(), $("#id_password").val())
         }
     }
-</script>
+</script> -->
 
 {% endblock content %}

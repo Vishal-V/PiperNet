@@ -29,15 +29,18 @@
 	    <script src="{{ url_for('static', filename='scripts/toolkit.js') }}"></script>
 	    <script src="{{ url_for('static', filename='scripts/application.js') }}"></script>
 
-		{% with messages = get_flashed_messages(with_categories=True) %}
-			{% if messages %}
-				{% for message, category in messages %}
-					<div class="alert alert-{{ category }}">
-						{{ message }}
-					</div>
-				{% endfor %}
-			{% endif %}
-		{% endwith %}
+		{% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+              <br>
+              <div class="container text-center">
+                <div class="col-md-12 alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+               </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
 
 		{% block content %}
 		{% endblock %}

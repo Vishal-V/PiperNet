@@ -2,8 +2,8 @@ from flask import *
 from ServerSide.DBClasses.User import User
 from flask import render_template, url_for, flash, redirect, request
 from ServerSide.DBClasses.forms import RegistrationForm, LoginForm
-from ServerSide.DBClasses.User import User
-# from ServerSide.DBClasses.Posts import Post
+from ServerSide.DBClasses.User import User 
+from ServerSide.DBClasses.Post import Post
 from flask_bcrypt import Bcrypt
 
 
@@ -11,42 +11,29 @@ app = Flask("__app__")
 app.config['SECRET_KEY'] = 'a551d32359baf371b9095f28d45347c8b8621830'
 bcrypt = Bcrypt(app)
 
-@app.route("/index", methods=['GET'])
-@app.route("/", methods=['GET'])
-def index():
-    return render_template("login.html")
-
-
 @app.route("/login", methods=['GET', 'POST'])
+@app.route("/", methods=['GET','POST'])
 def login():
-    if request.method == 'POST':
-        data = request.get_json()
-    else:
-        data = request.args
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Check if password hashes match
+        user = User.fetch(form.email.data)
 
-    if "username" in data:
-        user = User.fetch(data["username"])
-        print(user)
-        if user is None:
-            return jsonify(
-                text="No user with username: " + data["username"],
-                login_status=-1
-            ), 200
-        elif data["password"] != user.password:
-            return jsonify(
-                text="Wrong password",
-                login_status=1
-            ), 200
+        if user:
+            validate = bcrypt.check_password_hash(user.password, form.password.data)
+            if validate:
+                flash('Credentials Valid. Login successful', 'success')
+                return redirect(url_for('register'))
+            else:
+                flash(f'Password incorrect. Login unsuccessful', 'danger')
+                return redirect(url_for('register'))
+
         else:
-            return jsonify(
-                text="Logged in successfully",
-                login_status=0
-            ), 200
-
-
-    return render_template('login.html', title='Login')
-    # make_response(jsonify({'text': "Failure"}), 400)
-
+            flash(f'User does not exist', 'danger')
+            return redirect(url_for('register'))
+    else:
+        return render_template("login.html", title='Login', form=form)
+    
 @app.route("/home", methods=['GET', 'POST'])
 def timeline():
     return render_template('index.html', title='Home')
@@ -59,15 +46,13 @@ def profile():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        #hashed = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
-        #Will add full Auth. The hash is commented for now.
-        user1 = USERS(request.form['username'], request.form['password'], request.form['email'], 'default.jpg')
-        # db.session.add(user1)
-        # db.session.commit()
-        #Will update fom the methods defined. No API calls. 
-        # flash(f'Account created for {form.username.data}! Now log in', 'success')
-        #Needs to Auth 
+        # Creating password hash with default salt of 12
+        hashed = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
+        user1 = User(request.form['username'], hashed, request.form['email'])
+        user1.upload()
+        flash(f'Account created for {form.username.data}! Now log in', 'success')
         return redirect(url_for('login'))
+
     return render_template('register.html', title='Register', form=form)
 
 @app.route("/about")
@@ -75,7 +60,6 @@ def about():
     return render_template('about.html', title='About')
 
 app.run(debug=True)
-
 
 
 
