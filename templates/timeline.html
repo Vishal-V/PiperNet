@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+{% block content %}
+	<nav class="navbar navbar-toggleable-sm fixed-top navbar-inverse bg-primary app-navbar">
+      <a class="navbar-brand" href="'">
+        <img src="" alt="">
+      </a>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile">Profile</a>
+          </li>
+          
+          <li class="nav-item active">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+
+          <li class="nav-item hidden-md-up">
+            <a class="nav-link" href="">Notifications</a>
+          </li>
+          <li class="nav-item hidden-md-up">
+            <a class="nav-link" href="/profile">Profile</a>
+          </li>
+          <li class="nav-item hidden-md-up">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+
+        </ul>
+
+        <form class="form-inline float-right hidden-sm-down">
+          <input class="form-control" type="text" data-action="grow" placeholder="Search">
+        </form>
+
+        <ul id="#js-popoverContent" class="nav navbar-nav float-right mr-0 hidden-sm-down">
+
+          <li class="nav-item">
+            <a class="app-notifications nav-link" href="">
+              <span class="icon icon-bell"></span>
+            </a>
+          </li>
+
+          <li class="nav-item ml-2 avatar-list-item">
+            <a class="" data-toggle="popover">
+              <img class="rounded-circle" src="{{ url_for('static', filename='res/image_1.jpg') }}">
+            </a>
+          </li>
+           
+            </button>
+          </li>
+
+        </ul>
+
+        <ul class="nav navbar-nav hidden-xs-up" id="js-popoverContent">
+          <li class="nav-item"><a class="nav-link" href="#" data-action="growl">Notifications</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+	
+	<!-- 359 -->
+    <div class="container pt-4">
+  	<div class="row">
+    <div class="col-lg-3">
+      <div class="card card-profile mb-4">
+        <div class="card-header" style="background-image: url(res/iceland.jpg);"></div>
+        <div class="card-block text-center">
+          <a href="profile.html">
+            <img
+              class="card-profile-img"
+              src="res/image_1.jpg">
+          </a>
+
+          <h6 class="card-title">
+            <a class="text-inherit" href="profile.html">Vishal Vinod</a>
+          </h6>
+
+          <p class="mb-4">Learn postgreSQL and use it to build the backend for the social network</p>
+
+          <ul class="card-menu">
+            <li class="card-menu-item">
+              <a href="#userModal" class="text-inherit" data-toggle="modal">
+                Friends
+                <h6 class="my-0">12K</h6>
+              </a>
+            </li>
+
+            <li class="card-menu-item">
+              <a href="#userModal" class="text-inherit" data-toggle="modal">
+                Following
+                <h6 class="my-0">10</h6>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card visible-md-block visible-lg-block mb-4">
+        <div class="card-block">
+          <h6 class="mb-3">About <small>· <a href="#">Edit</a></small></h6>
+          <ul class="list-unstyled list-spaced">
+            <li><span class="text-muted icon icon-calendar mr-3"></span>Went to <a href="#">Sir MVIT</a>
+            <li><span class="text-muted icon icon-users mr-3"></span>Became friends with <a href="#">Wozniak</a>
+            <li><span class="text-muted icon icon-baidu mr-3"></span>Worked at <a href="#">Decentra</a>
+            <li><span class="text-muted icon icon-home mr-3"></span>Lives in <a href="#">Bangalore</a>
+            <li><span class="text-muted icon icon-location-pin mr-3"></span>From <a href="#">Bangalore</a>
+          </ul>
+        </div>
+      </div>
+
+       <div class="card visible-md-block visible-lg-block">
+        <div class="card-block">
+          <h6 class="mb-3">Photos <small>· <a href="#">Edit</a></small></h6>
+          <div data-grid="images" data-target-height="150">
+            <div>
+              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
+            </div>
+
+            <div>
+              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
+            </div>
+
+            <div>
+              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
+            </div>
+
+            <div>
+              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
+            </div>
+
+            <div>
+              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
+            </div>
+
+            <div>
+              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
