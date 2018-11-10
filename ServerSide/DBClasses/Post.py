@@ -18,7 +18,7 @@ class Post(DBWrapper):
                 title varchar(20) not null,
                 date varchar(20),
                 content text,
-                picture text,
+                picture varchar(30),
                 constraint fk_post foreign key(username)
                     references USERS(username)
                     on delete cascade

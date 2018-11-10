@@ -21,8 +21,7 @@ def load_user(user_id):
 @app.route("/login", methods=['GET', 'POST'])
 @app.route("/", methods=['GET','POST'])
 def login():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('profile'))
+    
     form = LoginForm()
     if form.validate_on_submit():
         # Check if password hashes match
@@ -49,12 +48,12 @@ def home():
 
 @app.route("/profile")
 def profile():
+    # Query that joins User and Profile to get the profile_pic url
+    # pass the profile_pic as a parameter with render_template
     return render_template('profile.html', title='Profile', current_user=current_user)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('about_l'))
 
     form = RegistrationForm()
     if form.validate_on_submit():
