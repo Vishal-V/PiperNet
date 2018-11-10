@@ -4,11 +4,12 @@ from flask_login import UserMixin
 class User(DBWrapper, UserMixin):
     TABLE_NAME = "USERS"
 
-    def __init__(self, username, password, email):
+    def __init__(self, username, password, email, profile_pic='default.jpg'):
         super().__init__()
         self.username = username
         self.password = password
         self.email = email
+        self.profile_pic = profile_pic
 
 
     # Push current object onto DB
@@ -100,6 +101,7 @@ class User(DBWrapper, UserMixin):
                 username varchar(15) primary key,
                 password varchar(100) not null,
                 email varchar(30) not null unique,
+                profile_pic varchar(30),
                 constraint password_length check(length(password)>=5)
             );
 

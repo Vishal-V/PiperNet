@@ -53,8 +53,8 @@ def profile():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('about_l'))
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('about_l'))
 
     form = RegistrationForm()
     if form.validate_on_submit():

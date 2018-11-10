@@ -71,6 +71,10 @@
         </ul>
       </div>
     </nav>
+  {% else %}
+    <div>
+      <h1>{{ current_user.password }}</h1>
+    </div>
   {% endif %}
     <div class="block block-secondary app-block-marketing-grid">
     <div class="container text-xs-center">
