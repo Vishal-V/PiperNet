@@ -70,7 +70,15 @@
         <div class="container">
           <div class="container-inner">
             <img class="rounded-circle media-object" src="{{ url_for('static', filename='res/image_1.jpg') }}">
-            <h3 class="profile-header-user">Vishal Vinod</h3>
+            <h3 class="profile-header-user">
+              <script>
+                var scriptTag = document.getElementsByTagName('script');
+                scriptTag = scriptTag[scriptTag.length - 1];
+
+                var parent = scriptTag.parentNode;
+                parent.innerHTML = '{{ username }}';
+              </script>
+            </h3>
             <p class="profile-header-bio">
               Profile status from the Database. Yet to configure....
             </p>

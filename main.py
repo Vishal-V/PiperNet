@@ -53,7 +53,7 @@ def timeline():
 
 @app.route("/profile")
 def profile():
-    return render_template('profile.html', title='Profile')
+    return render_template('profile.html', title='Profile', username='test')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
