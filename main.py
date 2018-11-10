@@ -5,15 +5,24 @@ from ServerSide.DBClasses.forms import RegistrationForm, LoginForm
 from ServerSide.DBClasses.User import User 
 from ServerSide.DBClasses.Post import Post
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager, UserMixin, login_user, current_user, login_required, logout_user
 
-
+# Initializations and callbacks
 app = Flask("__app__")
 app.config['SECRET_KEY'] = 'a551d32359baf371b9095f28d45347c8b8621830'
 bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.fetch_userid(int(user_id))
+
+# Routes
 @app.route("/login", methods=['GET', 'POST'])
 @app.route("/", methods=['GET','POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('about_l'))
     form = LoginForm()
     if form.validate_on_submit():
         # Check if password hashes match
@@ -22,11 +31,11 @@ def login():
         if user:
             validate = bcrypt.check_password_hash(user.password, form.password.data)
             if validate:
-                flash('Credentials Valid. Login successful', 'success')
-                return redirect(url_for('register'))
+                login_user(user)
+                return redirect(url_for('about_l'))
             else:
                 flash(f'Password incorrect. Login unsuccessful', 'danger')
-                return redirect(url_for('register'))
+                return redirect(url_for('login'))
 
         else:
             flash(f'User does not exist', 'danger')
@@ -40,10 +49,13 @@ def timeline():
 
 @app.route("/profile")
 def profile():
-    return render_template('profile.html', title='Profile', username='test')
+    return render_template('profile.html', title='Profile', current_user=current_user)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('about_l'))
+
     form = RegistrationForm()
     if form.validate_on_submit():
         # Creating password hash with default salt of 12
@@ -57,7 +69,16 @@ def register():
 
 @app.route("/about")
 def about():
-    return render_template('about.html', title='About')
+    return render_template('about.html', title='About', current_user=current_user)
+
+@app.route("/about_l")
+def about_l():
+    return render_template('about.html', title='About', current_user=current_user)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("login"))
 
 app.run(debug=True)
 
