@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  <div class="container-fluid container-fill-height">
+    <div class="container-content-middle">
+  
+    <div class="col-md-4"></div>
+    <div class="container col-md-4">
+      <div class="content-section">
+        <br>
+        <form method="POST" action="login">
+          {{ form.hidden_tag() }}
+          <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+              Log In
+            </legend>
+
+            <div class="form-group">
+              {{ form.email.label(class="form-control-label") }}
+              {% if form.email.errors %}
+                  {{ form.email(class="form-control is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+              {% else %}
+                {{ form.email(class="form-control form-control-lg") }}
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              {{ form.password.label(class="form-control-label") }}
+              {% if form.password.errors %}
+                {{ form.password(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.password.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.password(class="form-control form-control-lg") }}
+              {% endif %}
+            </div>
+          </fieldset>
+
+          <div class="form-group mb-5">
+            {{ form.submit(class="btn btn-secondary") }}
+            <button class="btn btn-secondary" id="register">
+              Sign up
+            </button>
+          </div>
+
+      </form>
+        <footer class="screen-login">
+          Forgot Password?  
+          <a href="#" class="">  Reset</a>
+        </footer>
+    </div>
+  </div>
+<script type="text/javascript">
+  
+  $('#register').click(function() {
+    window.location.href = '{{ url_for('register') }}'
+  })
+
+</script>
+<!-- <script>
+  function login(un, pass){
+      if(sessionStorage.getItem('username')!==un) {
+          $.ajax({
+              type: "POST",
+              url: "/login",
+              data: JSON.stringify({"username": un, "password": pass}),
+              success: function (data, text, XmlHttpRequest) {
+                  if(data.login_status===0){
+                      alert(data.text);
+                      sessionStorage.setItem('username', un);
+                  }
+              },
+              error: function (data, text, XmlHttpRequest) {
+                  alert("Failure");
+              },
+              contentType: "application/json",
+              dataType: 'json'
+          });
+      }
+      else{
+          alert("Already logged in as "+un);
+      }
+  }
+</script>
+<script>
+    window.onload = function () {
+        if(sessionStorage.getItem('username')==null)
+            sessionStorage.setItem('username', " ");
+        document.getElementById("loginBtn").onclick = function () {
+            login($("#id_username").val(), $("#id_password").val())
+        }
+    }
+</script> -->
+
+{% endblock content %}
