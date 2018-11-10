@@ -21,8 +21,8 @@ def load_user(user_id):
 @app.route("/login", methods=['GET', 'POST'])
 @app.route("/", methods=['GET','POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('about_l'))
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('profile'))
     form = LoginForm()
     if form.validate_on_submit():
         # Check if password hashes match
@@ -32,7 +32,7 @@ def login():
             validate = bcrypt.check_password_hash(user.password, form.password.data)
             if validate:
                 login_user(user)
-                return redirect(url_for('about_l'))
+                return redirect(url_for('profile'))
             else:
                 flash(f'Password incorrect. Login unsuccessful', 'danger')
                 return redirect(url_for('login'))
@@ -44,8 +44,8 @@ def login():
         return render_template("login.html", title='Login', form=form)
     
 @app.route("/home", methods=['GET', 'POST'])
-def timeline():
-    return render_template('index.html', title='Home')
+def home():
+    return render_template('login.html', title='Home')
 
 @app.route("/profile")
 def profile():
@@ -76,9 +76,10 @@ def about_l():
     return render_template('about.html', title='About', current_user=current_user)
 
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
-    return redirect(url_for("login"))
+    return redirect(url_for("register"))
 
 app.run(debug=True)
 
