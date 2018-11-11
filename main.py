@@ -28,7 +28,7 @@ def image_path(profile_pic):
     image_file = hexed + extension
     image_paths = os.path.join(app.root_path, 'static/res', image_file)
 
-    output_size = (155, 150)
+    output_size = (164, 164)
     images = Image.open(profile_pic)
     images.thumbnail(output_size)
     images.save(image_paths)
@@ -96,7 +96,10 @@ def profile():
             return redirect(url_for('profile'))
 
     fetched = fetch_pic(current_user.password)
-    url = 'res/' + fetched[-20:]
+    if fetched:
+        url = 'res/' + fetched[-20:]
+    else:
+        url = 'res/default.jpg'
     picture_url = url_for('static', filename=url) 
     return render_template('profile.html', title='Profile', current_user=current_user, form=form, image_file=picture_url)
 
@@ -107,7 +110,7 @@ def register():
     if form.validate_on_submit():
         # Creating password hash with default salt of 12
         hashed = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
-        user1 = User(request.form['username'], hashed, request.form['email'])
+        user1 = User(request.form['username'], hashed, request.form['email'], 'default.jpg')
         user1.upload()
         flash(f'Account created for {form.username.data}! Now log in', 'success')
         return redirect(url_for('login'))
