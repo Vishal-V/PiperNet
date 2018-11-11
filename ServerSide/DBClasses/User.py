@@ -15,8 +15,8 @@ class User(DBWrapper, UserMixin):
     # Push current object onto DB
     def upload(self):
         self.cursor.execute('''
-            INSERT INTO USERS(username, password, email) VALUES (%s, %s, %s);
-        ''', (self.username, self.password, self.email))
+            INSERT INTO USERS(username, password, email, profile_pic) VALUES (%s, %s, %s, %s);
+        ''', (self.username, self.password, self.email, self.profile_pic))
 
 
     # Fetch an entry from DB, and return it as a python object of this class
@@ -30,7 +30,7 @@ class User(DBWrapper, UserMixin):
         if rec is None:
             return None
 
-        return User(rec[0], rec[2], rec[3])
+        return User(rec[0], rec[2], rec[3], rec[1])
 
 
     @staticmethod
@@ -43,7 +43,7 @@ class User(DBWrapper, UserMixin):
         if rec is None:
             return None
 
-        return User(rec[0], rec[1], rec[2])        
+        return User(rec[0], rec[1], rec[2], rec[3])        
 
     @staticmethod
     def fetch_userid(user_id):
@@ -55,7 +55,7 @@ class User(DBWrapper, UserMixin):
         if rec is None:
             return None
 
-        return User(rec[0], rec[1], rec[2]) 
+        return User(rec[0], rec[1], rec[2], rec[3]) 
 
     # def is_authenticated(self):
     #     return True
