@@ -67,7 +67,7 @@
       <div class="profile-header" style="background-image: url({{ url_for('static', filename='res/iceland.jpg') }});">
         <div class="container">
           <div class="container-inner">
-            <img class="rounded-circle media-object" src="{{ url_for('static', filename='res/image_1.jpg') }}">
+            <img class="rounded-circle media-object" src="{{ image_file }}">
             <h3 class="profile-header-user">
               
             </h3>
@@ -179,15 +179,15 @@
               {% endif %}
             </div>
 
-             <div class="form-group">
-            {{ form.image.label() }}
-            {{ form.image(class="form-control-file") }}
-            {% if form.image.errors %}
-                {% for error in form.image.errors %}
-                    <span class="text-danger">{{ error }}</span></br>
-                {% endfor %}
-            {% endif %}
-          </div>
+            <div class="form-group">
+              {{ form.image.label() }}
+              {{ form.image(class="form-control-file") }}
+              {% if form.image.errors %}
+                  {% for error in form.image.errors %}
+                      <span class="text-danger">{{ error }}</span></br>
+                  {% endfor %}
+              {% endif %}
+            </div>
 
           </fieldset>
           <div class="form-group">

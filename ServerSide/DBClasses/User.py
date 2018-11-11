@@ -1,5 +1,5 @@
 from .DBWrapper import DBWrapper
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 
 class User(DBWrapper, UserMixin):
     TABLE_NAME = "USERS"
@@ -57,6 +57,15 @@ class User(DBWrapper, UserMixin):
             return None
 
         return User(rec[0], rec[1], rec[2], rec[3], rec[4]) 
+
+
+    def update_value(image, username):
+        DBWrapper.cursor.execute('''
+            UPDATE PROFILE
+            SET profile_pic=(%s)
+            WHERE username=(%s);
+        ''', (image, username))
+
 
     # def is_authenticated(self):
     #     return True

@@ -25,7 +25,7 @@ class Profile(DBWrapper):
 				lives_in varchar(20), 
 				place varchar(20), 
 				friends integer,
-				image varchar(30), 
+				image varchar(150), 
 				constraint cpk_1 primary key(username, name),
 				constraint fk_2 foreign key(username) references USERS(username) on delete cascade
 			);
@@ -57,6 +57,16 @@ class Profile(DBWrapper):
 			WHERE username=(%s);
 		''', (self.name, self.status, self.age, self.lives_in, self.place, self.friends, self.image, username))
 
+	@staticmethod
+	def fetch_pic(username):
+		DBWrapper.cursor.execute('''
+			SELECT * FROM PROFILE WHERE username=(%s);
+		''', (username,))
+		
+		rec = DBWrapper.cursor.fetchone()
+		if rec is None:
+			return None
+		return rec[7]
 
 	@staticmethod
 	def drop_table():
