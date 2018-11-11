@@ -1,4 +1,5 @@
 from flask import *
+from ServerSide.DBClasses.DBWrapper import DBWrapper
 import os
 import secrets
 import random
@@ -25,7 +26,18 @@ def image_path(profile_pic):
     file, extension = os.path.splitext(profile_pic.filename)
     image_file = hexed + extension
     image_paths = os.path.join(app.root_path, 'static/res', image_file)
-    return image_file
+    profile_pic.save(image_paths)
+    return image_paths
+
+def fetch_pic(username):
+        DBWrapper.cursor.execute('''
+            SELECT * FROM PROFILE WHERE username=(%s);
+        ''', (username,))
+        
+        rec = DBWrapper.cursor.fetchone()
+        if rec is None:
+            return None
+        return rec[7]
 
 # Routes
 @app.route("/login", methods=['GET', 'POST'])
@@ -56,6 +68,7 @@ def login():
 def home():
     return render_template('login.html', title='Home')
 
+
 @app.route("/profile", methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -63,11 +76,11 @@ def profile():
     if form.validate_on_submit():
         if form.image.data:
             picture_file = image_path(form.image.data)
-            current_user.misc = picture_file
+            picture_url = picture_file
 
         num_friends = random.randint(3,1000)
         username = current_user.password
-        profile = Profile(username, form.name.data, form.status.data, form.age.data, form.lives.data, form.place.data, num_friends)
+        profile = Profile(username, form.name.data, form.status.data, form.age.data, form.lives.data, form.place.data, num_friends, picture_url)
 
         if profile.user_exists():
             profile.update_values(username)
@@ -75,9 +88,11 @@ def profile():
         else:
             profile.upload()
             return redirect(url_for('profile'))
-    # Query that joins User and Profile to get the profile_pic url
-    # pass the profile_pic as a parameter with render_template
-    return render_template('profile.html', title='Profile', current_user=current_user, form=form)
+
+    fetched = fetch_pic(current_user.password)
+    url = 'res/' + fetched[-20:]
+    picture_url = url_for('static', filename=url) 
+    return render_template('profile.html', title='Profile', current_user=current_user, form=form, image_file=picture_url)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
