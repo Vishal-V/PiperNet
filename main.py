@@ -1,4 +1,5 @@
 from flask import *
+from PIL import Image
 from ServerSide.DBClasses.DBWrapper import DBWrapper
 import os
 import secrets
@@ -26,7 +27,12 @@ def image_path(profile_pic):
     file, extension = os.path.splitext(profile_pic.filename)
     image_file = hexed + extension
     image_paths = os.path.join(app.root_path, 'static/res', image_file)
-    profile_pic.save(image_paths)
+
+    output_size = (155, 150)
+    images = Image.open(profile_pic)
+    images.thumbnail(output_size)
+    images.save(image_paths)
+
     return image_paths
 
 def fetch_pic(username):
