@@ -27,12 +27,12 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class ProfileForm(FlaskForm):
-	name = StringField('name', validators=[DataRequired(), Length(min=2, max=15)])
-	status = StringField('status', validators=[DataRequired()])
-	age = IntegerField('age', validators=[DataRequired()])
-	lives = StringField('lives', validators=[DataRequired()])
-	place = StringField('place', validators=[DataRequired()])
-	submit = SubmitField('Update')
+	name = StringField('Name', validators=[DataRequired(), Length(min=2, max=15)])
+	status = StringField('Status', validators=[DataRequired()])
+	age = IntegerField('Age', validators=[DataRequired()])
+	lives = StringField('Lives', validators=[DataRequired()])
+	place = StringField('Place', validators=[DataRequired()])
+	submit = SubmitField('Update Profile')
 
 	def check_username(self, username):
 		user = User.fetch_username(username.data)

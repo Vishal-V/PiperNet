@@ -48,6 +48,7 @@ def home():
     return render_template('login.html', title='Home')
 
 @app.route("/profile", methods=['GET', 'POST'])
+@login_required
 def profile():
     form = ProfileForm()
     if form.validate_on_submit():
