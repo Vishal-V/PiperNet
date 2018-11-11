@@ -86,10 +86,10 @@
         <nav class="profile-header-nav">
           <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
-              <a class="nav-link" href="#" id="pictures">Photos</a>
+              <a class="nav-link" href="#photos" id="pictures">Photos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" id="status">Account</a>
+              <a class="nav-link" href="#account" id="status">Account</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#" id="timeline">Timeline</a>
@@ -98,10 +98,10 @@
         </nav>
       </div>
 
-    <div class="container col-md-6" id="account" style="display:none;" data-grid="">
+    <div class="container col-md-6" id="account" data-grid="">
       <div class="content-section">
         <br><br>
-        <form method="POST" action="profile">
+        <form method="POST" action="profile" enctype="multipart/form-data">
           {{ form.hidden_tag() }}
           <fieldset class="form-group">
             <legend class="border-bottom mb-4">
@@ -185,10 +185,21 @@
               {% endif %}
             </div>
 
+             <div class="form-group">
+            {{ form.image.label() }}
+            {{ form.image(class="form-control-file") }}
+            {% if form.image.errors %}
+                {% for error in form.image.errors %}
+                    <span class="text-danger">{{ error }}</span></br>
+                {% endfor %}
+            {% endif %}
+          </div>
+
           </fieldset>
           <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}
           </div>
+
         </form>
 
       </div>
@@ -211,7 +222,7 @@
         <img data-width="640" data-height="400" data-action="zoom" src="{{ url_for('static', filename='res/image_2.jpg') }}">
       </div>
     </div>
-    
+    <!-- 
     <script type="text/javascript">
       
 
@@ -220,5 +231,5 @@
       $('#photos').toggle('slow', function() {});
       });
 
-    </script>
+    </script> -->
 {% endblock content %}

@@ -1,4 +1,6 @@
 from flask import *
+import os
+import secrets
 import random
 from flask import render_template, url_for, flash, redirect, request
 from ServerSide.DBClasses.forms import RegistrationForm, LoginForm, ProfileForm
@@ -17,6 +19,13 @@ login_manager = LoginManager(app)
 @login_manager.user_loader
 def load_user(user_id):
     return User.fetch_userid(int(user_id))
+
+def image_path(profile_pic):
+    hexed = secrets.token_hex(10)
+    file, extension = os.path.splitext(profile_pic.filename)
+    image_file = hexed + extension
+    image_paths = os.path.join(app.root_path, 'static/res', image_file)
+    return image_file
 
 # Routes
 @app.route("/login", methods=['GET', 'POST'])
@@ -52,6 +61,10 @@ def home():
 def profile():
     form = ProfileForm()
     if form.validate_on_submit():
+        if form.image.data:
+            picture_file = save_picture(form.image.data)
+            current_user.image_file = picture_file
+            
         num_friends = random.randint(3,1000)
         username = current_user.password
         profile = Profile(username, form.name.data, form.status.data, form.age.data, form.lives.data, form.place.data, num_friends)

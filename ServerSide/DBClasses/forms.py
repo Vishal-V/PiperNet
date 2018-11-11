@@ -3,6 +3,7 @@ from wtforms import StringField, SubmitField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from .User import User
 from flask_login import current_user
+from flask_wtf.file import FileField, FileAllowed
 
 class RegistrationForm(FlaskForm):
 	username = StringField('Username', validators=[DataRequired(), Length(min=2, max=15)])
@@ -32,6 +33,7 @@ class ProfileForm(FlaskForm):
 	age = IntegerField('Age', validators=[DataRequired()])
 	lives = StringField('Lives', validators=[DataRequired()])
 	place = StringField('Place', validators=[DataRequired()])
+	image = FileField('Upload a new Profile Picture', validators=[FileAllowed('jpg', 'png')])
 	submit = SubmitField('Update Profile')
 
 	def check_username(self, username):

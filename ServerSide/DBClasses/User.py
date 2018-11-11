@@ -4,19 +4,20 @@ from flask_login import UserMixin
 class User(DBWrapper, UserMixin):
     TABLE_NAME = "USERS"
 
-    def __init__(self, username, password, email, profile_pic='default.jpg'):
+    def __init__(self, username, password, email, profile_pic='default.jpg', misc='default.jpg'):
         super().__init__()
         self.username = username
         self.password = password
         self.email = email
         self.profile_pic = profile_pic
+        self.misc = misc
 
 
     # Push current object onto DB
     def upload(self):
         self.cursor.execute('''
-            INSERT INTO USERS(username, password, email, profile_pic) VALUES (%s, %s, %s, %s);
-        ''', (self.username, self.password, self.email, self.profile_pic))
+            INSERT INTO USERS(username, password, email, profile_pic, misc) VALUES (%s, %s, %s, %s, %s);
+        ''', (self.username, self.password, self.email, self.profile_pic, self.misc))
 
 
     # Fetch an entry from DB, and return it as a python object of this class
@@ -30,7 +31,7 @@ class User(DBWrapper, UserMixin):
         if rec is None:
             return None
 
-        return User(rec[0], rec[2], rec[3], rec[1])
+        return User(rec[0], rec[2], rec[3], rec[1], rec[4])
 
 
     @staticmethod
@@ -43,7 +44,7 @@ class User(DBWrapper, UserMixin):
         if rec is None:
             return None
 
-        return User(rec[0], rec[1], rec[2], rec[3])        
+        return User(rec[0], rec[1], rec[2], rec[3], rec[4])        
 
     @staticmethod
     def fetch_userid(user_id):
@@ -55,7 +56,7 @@ class User(DBWrapper, UserMixin):
         if rec is None:
             return None
 
-        return User(rec[0], rec[1], rec[2], rec[3]) 
+        return User(rec[0], rec[1], rec[2], rec[3], rec[4]) 
 
     # def is_authenticated(self):
     #     return True
@@ -76,7 +77,7 @@ class User(DBWrapper, UserMixin):
         if rec is None:
             return None
 
-        user1 = User(rec[0], rec[1], rec[2])  
+        user1 = User(rec[0], rec[1], rec[2], rec[3], rec[4])  
         return (user1.username)
 
     # Fetch an entry into current object
@@ -102,6 +103,7 @@ class User(DBWrapper, UserMixin):
                 password varchar(100) not null,
                 email varchar(30) not null unique,
                 profile_pic varchar(30),
+                misc varchar(30),
                 constraint password_length check(length(password)>=5)
             );
 
