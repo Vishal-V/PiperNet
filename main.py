@@ -1,9 +1,10 @@
 from flask import *
-from ServerSide.DBClasses.User import User
+import random
 from flask import render_template, url_for, flash, redirect, request
-from ServerSide.DBClasses.forms import RegistrationForm, LoginForm
+from ServerSide.DBClasses.forms import RegistrationForm, LoginForm, ProfileForm
 from ServerSide.DBClasses.User import User 
 from ServerSide.DBClasses.Post import Post
+from ServerSide.DBClasses.Profile import Profile
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, current_user, login_required, logout_user
 
@@ -21,7 +22,7 @@ def load_user(user_id):
 @app.route("/login", methods=['GET', 'POST'])
 @app.route("/", methods=['GET','POST'])
 def login():
-    
+
     form = LoginForm()
     if form.validate_on_submit():
         # Check if password hashes match
@@ -46,11 +47,18 @@ def login():
 def home():
     return render_template('login.html', title='Home')
 
-@app.route("/profile")
+@app.route("/profile", methods=['GET', 'POST'])
 def profile():
+    form = ProfileForm()
+    if form.validate_on_submit():
+        num_friends = random.randint(3,1000)
+        username = current_user.password
+        profile = Profile(username, form.name.data, form.status.data, form.age.data, form.lives.data, form.place.data, num_friends)
+        profile.upload()
+        return redirect(url_for('profile'))
     # Query that joins User and Profile to get the profile_pic url
     # pass the profile_pic as a parameter with render_template
-    return render_template('profile.html', title='Profile', current_user=current_user)
+    return render_template('profile.html', title='Profile', current_user=current_user, form=form)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():

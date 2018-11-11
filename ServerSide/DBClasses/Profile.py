@@ -22,7 +22,7 @@ class Profile(DBWrapper):
 				name varchar(15), 
 				image varchar(30), 
 				status text, 
-				age number(3) check(age>=18)
+				age integer check(age>=18),
 				lives_in varchar(20), 
 				place varchar(20), 
 				friends integer,
@@ -32,10 +32,14 @@ class Profile(DBWrapper):
 		''')
 
 	def upload(self):
-		friends = random.randint(3,1000)
 		self.cursor.execute('''
-			INSERT INTO PROFILE(username, name, status, age, lives_in, place, friends) VALUES (%s,%s,%s,%s,%s,%s,%s)
-			)
+			INSERT INTO PROFILE(username, name, status, age, lives_in, place, friends) VALUES (%s,%s,%s,%s,%s,%s,%s);
+
 		''', (self.username, self.name, self.status, self.age, self.lives_in, self.place, self.friends))
 
-		
+
+	@staticmethod
+	def drop_table():
+		DBWrapper.exec_query('''
+			DROP TABLE PROFILE;
+		''')

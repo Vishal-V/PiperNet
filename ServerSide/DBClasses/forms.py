@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from wtforms import StringField, SubmitField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from .User import User
 from flask_login import current_user
@@ -28,8 +28,8 @@ class LoginForm(FlaskForm):
 
 class ProfileForm(FlaskForm):
 	name = StringField('name', validators=[DataRequired(), Length(min=2, max=15)])
-	age = IntegerField('status', validators=[DataRequired()])
 	status = StringField('status', validators=[DataRequired()])
+	age = IntegerField('age', validators=[DataRequired()])
 	lives = StringField('lives', validators=[DataRequired()])
 	place = StringField('place', validators=[DataRequired()])
 	submit = SubmitField('Update')
