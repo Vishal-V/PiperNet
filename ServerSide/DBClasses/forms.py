@@ -33,7 +33,7 @@ class ProfileForm(FlaskForm):
 	age = IntegerField('Age', validators=[DataRequired()])
 	lives = StringField('Lives', validators=[DataRequired()])
 	place = StringField('Place', validators=[DataRequired()])
-	image = FileField('Upload a new Profile Picture', validators=[FileAllowed('jpg', 'png')])
+	image = FileField('Upload a new Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
 	submit = SubmitField('Update Profile')
 
 	def check_username(self, username):

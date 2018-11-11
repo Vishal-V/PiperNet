@@ -69,13 +69,7 @@
           <div class="container-inner">
             <img class="rounded-circle media-object" src="{{ url_for('static', filename='res/image_1.jpg') }}">
             <h3 class="profile-header-user">
-              <!-- <script>
-                var scriptTag = document.getElementsByTagName('script');
-                scriptTag = scriptTag[scriptTag.length - 1];
-
-                var parent = scriptTag.parentNode;
-                parent.innerHTML = '{{ username }}';
-              </script> -->
+              
             </h3>
             <p class="profile-header-bio">
               <strong>{{ current_user.password }}</strong>
@@ -101,7 +95,7 @@
     <div class="container col-md-6" id="account" data-grid="">
       <div class="content-section">
         <br><br>
-        <form method="POST" action="profile" enctype="multipart/form-data">
+        <form method="POST" action="" enctype="multipart/form-data">
           {{ form.hidden_tag() }}
           <fieldset class="form-group">
             <legend class="border-bottom mb-4">
@@ -201,7 +195,11 @@
           </div>
 
         </form>
-
+        <ul class="nav nav-tabs justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link" href="#top" id="footer">Top</a>
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -219,9 +217,15 @@
       </div>
 
       <div>
-        <img data-width="640" data-height="400" data-action="zoom" src="{{ url_for('static', filename='res/image_2.jpg') }}">
+        <img data-width="640" data-height="400" data-action="zoom" src="{{ url_for('static', filename='res/image_4.jpg') }}">
       </div>
     </div>
+
+    <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link" href="#top" id="footer">Top</a>
+        </li>
+    </ul>
     <!-- 
     <script type="text/javascript">
       

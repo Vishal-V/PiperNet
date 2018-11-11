@@ -21,7 +21,7 @@ def load_user(user_id):
     return User.fetch_userid(int(user_id))
 
 def image_path(profile_pic):
-    hexed = secrets.token_hex(10)
+    hexed = secrets.token_hex(8)
     file, extension = os.path.splitext(profile_pic.filename)
     image_file = hexed + extension
     image_paths = os.path.join(app.root_path, 'static/res', image_file)
@@ -62,14 +62,19 @@ def profile():
     form = ProfileForm()
     if form.validate_on_submit():
         if form.image.data:
-            picture_file = save_picture(form.image.data)
-            current_user.image_file = picture_file
-            
+            picture_file = image_path(form.image.data)
+            current_user.misc = picture_file
+
         num_friends = random.randint(3,1000)
         username = current_user.password
         profile = Profile(username, form.name.data, form.status.data, form.age.data, form.lives.data, form.place.data, num_friends)
-        profile.upload()
-        return redirect(url_for('profile'))
+
+        if profile.user_exists():
+            profile.update_values(username)
+            return redirect(url_for('profile'))
+        else:
+            profile.upload()
+            return redirect(url_for('profile'))
     # Query that joins User and Profile to get the profile_pic url
     # pass the profile_pic as a parameter with render_template
     return render_template('profile.html', title='Profile', current_user=current_user, form=form)

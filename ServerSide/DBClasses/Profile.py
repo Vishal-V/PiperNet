@@ -37,6 +37,26 @@ class Profile(DBWrapper):
 
 		''', (self.username, self.name, self.status, self.age, self.lives_in, self.place, self.friends, self.image))
 
+	
+	def user_exists(self):
+		self.cursor.execute('''
+			SELECT * FROM PROFILE WHERE username=(%s);
+		''', (self.username,))
+
+		val = DBWrapper.cursor.fetchone()
+
+		if val is None:
+			return False
+		return True		
+
+
+	def update_values(self, username):
+		self.cursor.execute('''
+			UPDATE PROFILE
+			SET name=(%s), status=(%s), age=(%s), lives_in=(%s), place=(%s), friends=(%s), image=(%s)
+			WHERE username=(%s);
+		''', (self.name, self.status, self.age, self.lives_in, self.place, self.friends, self.image, username))
+
 
 	@staticmethod
 	def drop_table():
