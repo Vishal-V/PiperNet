@@ -1,4 +1,8 @@
 # Decentralized Social Network
+
+### Commits to this repo have been stopped as the project turned out very well. 
+### I have made it a private repo on bitbucket. Contact by mail if you are intersted in contributing
+
 ## Introduction
 Beneath the flashy homepages of your favorite stars lurk Facebook™ and other evil companies out to hoard and sell all your personal data. With the rise of #FakeNews and the high profile political scandals of Facebook, it is time for the next wave of technological advances to come forth.  
 
