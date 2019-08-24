@@ -1,20 +1,29 @@
 {% extends "layout.html" %}
 {% block content %}
 
-  <div class="container-fluid container-fill-height">
-    <div class="container-content-middle">
-  
-    <div class="col-md-4"></div>
-    <div class="container col-md-4">
-      <div class="content-section">
-        <br>
-        <form method="POST" action="login">
+ <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100">
+        <div class="login100-pic js-tilt" data-tilt>
+          <img src="{{ url_for('static', filename='res/img-01.png') }}" alt="IMG" class="image1">
+        </div>
+        <script >
+          $('.js-tilt').tilt({
+            scale: 1.1
+          })
+        </script>
+
+
+      <form method="POST" action="login">
           {{ form.hidden_tag() }}
           <fieldset class="form-group">
-            <legend class="border-bottom mb-4">
-              Log In
-            </legend>
-
+          <legend class="border-bottom mb-4 text-center">
+            Member Login
+          </legend>
+            
+          </fieldset>
+          
+          <div class="wrap-input100">
             <div class="form-group">
               {{ form.email.label(class="form-control-label") }}
               {% if form.email.errors %}
@@ -29,6 +38,8 @@
               {% endif %}
             </div>
 
+          <div class="wrap-input100">
+           
             <div class="form-group">
               {{ form.password.label(class="form-control-label") }}
               {% if form.password.errors %}
@@ -42,20 +53,27 @@
                 {{ form.password(class="form-control form-control-lg") }}
               {% endif %}
             </div>
-          </fieldset>
-
-          <div class="form-group mb-5">
-            {{ form.submit(class="btn btn-secondary") }}
-            <button class="btn btn-secondary" id="register">
-              Sign up
-            </button>
+          
+          </div>
+          
+          <div class="container-login100-form-btn">
+            {{ form.submit(class="login100-form-btn") }}
           </div>
 
-      </form>
-        <footer class="screen-login">
-          Forgot Password?  
-          <a href="#" class="">  Reset</a>
-        </footer>
+          <div class="text-center p-t-12">
+            <span class="txt1">Forgot password? </span>
+            <a class="txt5" href="#">
+              reset
+            </a>
+          </div>
+
+          <div class="text-center p-t-65">
+            <a class="txt6" href="{{ url_for('register') }}">
+              Create your Account
+              <i class="fa fa-long-arrow-right m-l-5"></i>
+            </a>
+          </div>
+        </form>
     </div>
   </div>
 <script type="text/javascript">
@@ -65,39 +83,5 @@
   })
 
 </script>
-<!-- <script>
-  function login(un, pass){
-      if(sessionStorage.getItem('username')!==un) {
-          $.ajax({
-              type: "POST",
-              url: "/login",
-              data: JSON.stringify({"username": un, "password": pass}),
-              success: function (data, text, XmlHttpRequest) {
-                  if(data.login_status===0){
-                      alert(data.text);
-                      sessionStorage.setItem('username', un);
-                  }
-              },
-              error: function (data, text, XmlHttpRequest) {
-                  alert("Failure");
-              },
-              contentType: "application/json",
-              dataType: 'json'
-          });
-      }
-      else{
-          alert("Already logged in as "+un);
-      }
-  }
-</script>
-<script>
-    window.onload = function () {
-        if(sessionStorage.getItem('username')==null)
-            sessionStorage.setItem('username', " ");
-        document.getElementById("loginBtn").onclick = function () {
-            login($("#id_username").val(), $("#id_password").val())
-        }
-    }
-</script> -->
 
 {% endblock content %}

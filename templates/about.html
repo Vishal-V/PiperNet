@@ -1,17 +1,43 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="section3">
-    <div class="video-wrapper">
-      <video class="bg-video" src="{{ url_for('static', filename='res/Video_2.mp4') }}" autoplay loop muted></video>
+	<style type="text/css">
+      .overlay-desc {
+        background: rgba(0,0,0,0);
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+        
+      }
+
+      .video-container {
+        position: relative;
+      }
+
+      .quote {
+        word-wrap: break-word; 
+        color: white;
+        font-size: 2.15em;
+        text-align: center;
+        content: wrap;
+      }
+
+    </style>
+  {% if current_user.is_authenticated %}
+    <div class="section3">
+      <div class="video-wrapper video-container">
+        <video class="bg-video other" src="{{ url_for('static', filename='res/Video_2.mp4') }}" autoplay loop muted></video>
+        <div class="content overlay-desc">
+          <div class="quote">We’re in this together!<br>
+            All of our computers and phones join in a network to make the strongest<br> supercomputer the world has ever seen!</div>
+        </div>
       </div>
-    <div class="inner">
-      <div class="content">
-        <blockquote>We’re in this together! All of our computers and phones join in a network to make the strongest supercomputer the world has ever seen!</blockquote>
+      <div class="inner">
+        
       </div>
     </div>
-  </div>
   
-  {% if current_user.is_authenticated %}
     <nav class="navbar navbar-toggleable-sm fixed-top navbar-inverse bg-primary app-navbar">
       <a class="navbar-brand" href="'">
         <img src="" alt="">
@@ -26,13 +52,14 @@
             <a class="nav-link" href="/profile">Profile</a>
           </li>
           
+          <li class="nav-item">
+            <a class="nav-link" href="/post/new">Create</a>
+          </li>
+
           <li class="nav-item active">
             <a class="nav-link" href="/about">About</a>
           </li>
 
-          <li class="nav-item hidden-md-up">
-            <a class="nav-link" href="">Notifications</a>
-          </li>
           <li class="nav-item hidden-md-up">
             <a class="nav-link" href="/profile">Profile</a>
           </li>
@@ -56,7 +83,7 @@
 
           <li class="nav-item ml-2 avatar-list-item">
             <a class="" data-toggle="popover">
-              <img class="rounded-circle" src="{{ url_for('static', filename='res/image_1.jpg') }}">
+              <img class="rounded-circle" src="{{ current_user.profile_pic }}">
             </a>
           </li>
            
@@ -67,13 +94,22 @@
 
         <ul class="nav navbar-nav hidden-xs-up" id="js-popoverContent">
           <li class="nav-item"><a class="nav-link" href="#" data-action="growl">Notifications</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Logout</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
         </ul>
       </div>
     </nav>
   {% else %}
-    <div>
-      <h1>{{ current_user.password }}</h1>
+    <div class="section3">
+      <div class="video-wrapper video-container">
+        <video class="bg-video other" src="{{ url_for('static', filename='res/Video_1.mp4') }}" autoplay loop muted></video>
+        <div class="content overlay-desc">
+          <div class="quote">We’re in this together!<br>
+            All of our computers and phones join in a network to make the strongest<br> supercomputer the world has ever seen!</div>
+        </div>
+      </div>
+      <div class="inner">
+        
+      </div>
     </div>
   {% endif %}
     <div class="block block-secondary app-block-marketing-grid">

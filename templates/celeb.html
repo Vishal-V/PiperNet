@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="profile-header" style="background-image: url({{ celeb.misc }});">
+        <div class="container">
+          <div class="container-inner">
+            <img class="rounded-circle media-object" src="{{ celeb.image }}">
+            <h3 class="profile-header-user">
+              
+            </h3>
+            <p class="profile-header-bio">
+              <strong class="">{{ celeb.create_for }}</strong>
+              <br>
+              <el>{{ celeb.content }}</el>
+            </p>
+          </div>
+        </div>
+
+        <nav class="profile-header-nav">
+          <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="pictures">Photos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="status">Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="timeline">Timeline</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <br>
+
+        <div class="col-lg-3">
+        <div class="card card-profile mb-4">
+          <div class="card-header" style="background-image: url({{ url_for('static', filename='res/iceland.jpg') }});"></div>
+          <div class="card-block text-center">
+            <a href="{{ url_for('about') }}">
+              <img
+                class="card-profile-img"
+                src="{{ celeb.image }}"
+                width=100px height=100px>
+            </a>
+
+            <p class="mb-4">{{ celeb.content }}</p>
+
+            <ul class="card-menu">
+              <li class="card-menu-item">
+                <a href="#userModal" class="text-inherit" data-toggle="modal">
+                  Friends
+                  <h6 class="my-0">{{ celeb.followers }}</h6>
+                </a>
+              </li>
+
+              <li class="card-menu-item">
+                <a href="#userModal" class="text-inherit" data-toggle="modal">
+                  Following
+                  <h6 class="my-0">10</h6>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card visible-md-block visible-lg-block mb-4">
+          <div class="card-block">
+            <h6 class="mb-3">About</h6>
+            <ul class="list-unstyled list-spaced">
+              <li><span class="text-muted icon icon-graduation-cap mr-3"></span>Went to <a href="#">Stanford</a>
+              <li><span class="text-muted icon icon-calendar mr-3"></span>Name {{ celeb.create_for }}
+              <li><span class="text-muted icon icon-users mr-3"></span>Followers include {{ celeb.followers }}+ users
+              <li><span class="text-muted icon icon-baidu mr-3"></span>Worked at <a href="#">{{ celeb.company }}</a>
+              <li><span class="text-muted icon icon-home mr-3"></span>Lives in <a href="#">{{ celeb.place }}</a>
+              <li><span class="text-muted icon icon-location-pin mr-3"></span>From <a href="#">{{ celeb.place }}</a><br>
+              <button class="btn btn-primary" style="margin: 10px 0px 5px 50px;" id="follow" onclick="change()">Follow</button>
+            </ul>
+          </div>
+        </div>
+        </div>-
+      </div>
+    </div>
+    <script type="text/javascript">
+      function change() {
+        var elem = document.getElementById("follow");
+        if (elem.innerHTML=="Follow") elem.innerHTML = "Unfollow";
+        else elem.innerHTML = "Follow";
+      }
+    </script>
+{% endblock content %}

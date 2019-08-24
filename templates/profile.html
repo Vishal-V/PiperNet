@@ -2,67 +2,71 @@
 {% block content %}
   <body class="with-top-navbar">
       <div class="growl" id="app-growl"></div>
-
+      
       <nav class="navbar navbar-toggleable-sm fixed-top navbar-inverse bg-primary app-navbar">
         <a class="navbar-brand" href="/home">
           <img src="" alt="">
         </a>
 
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/home">Home</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/profile">Profile</a>
-            </li>
-            
-            <li class="nav-item">
-              <a class="nav-link" href="/about">About</a>
-            </li>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/home">Home</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/profile">Profile</a>
+              </li>
+              
+              <li class="nav-item md-up">
+                <a class="nav-link" href="/post/new">Create</a>
+              </li>
 
-            <li class="nav-item hidden-md-up">
-              <a class="nav-link" href="">Notifications</a>
-            </li>
-            <li class="nav-item hidden-md-up">
-              <a class="nav-link" href="/profile">Profile</a>
-            </li>
-            <li class="nav-item hidden-md-up">
-              <a class="nav-link" href="/logout">Logout</a>
-            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+              </li>
 
-          </ul>
+              <li class="nav-item">
+                <a class="nav-link" href="/create_celeb">Celebrity</a>
+              </li>
 
-          <form class="form-inline float-right hidden-sm-down">
-            <input class="form-control" type="text" data-action="grow" placeholder="Search">
-          </form>
+              <li class="nav-item hidden-md-up">
+                <a class="nav-link" href="/profile">Profile</a>
+              </li>
+              <li class="nav-item hidden-md-up">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
 
-          <ul id="#js-popoverContent" class="nav navbar-nav float-right mr-0 hidden-sm-down">
+            </ul>
 
-            <li class="nav-item">
-              <a class="app-notifications nav-link" href="">
-                <span class="icon icon-bell"></span>
-              </a>
-            </li>
+            <form class="form-inline float-right hidden-sm-down">
+              <input class="form-control" type="text" data-action="grow" placeholder="Search">
+            </form>
 
-            <li class="nav-item ml-2 avatar-list-item">
-              <a class="" data-toggle="popover">
-                <img class="rounded-circle" src="{{ image_file }}">
-              </a>
-            </li>
-             
-              </button>
-            </li>
+            <ul id="#js-popoverContent" class="nav navbar-nav float-right mr-0 hidden-sm-down">
 
-          </ul>
+              <li class="nav-item">
+                <a class="app-notifications nav-link" href="">
+                  <span class="icon icon-bell"></span>
+                </a>
+              </li>
 
-          <ul class="nav navbar-nav hidden-xs-up" id="js-popoverContent">
-            <li class="nav-item"><a class="nav-link" href="#" data-action="growl">Notifications</a></li>
-            <li class="nav-item"><a class="nav-link" href="/login">Logout</a></li>
-          </ul>
-        </div>
+              <li class="nav-item ml-2 avatar-list-item">
+                <a class="" data-toggle="popover">
+                  <img class="rounded-circle" src="{{ image_file }}">
+                </a>
+              </li>
+               
+                </button>
+              </li>
+
+            </ul>
+
+            <ul class="nav navbar-nav hidden-xs-up" id="js-popoverContent">
+              <li class="nav-item"><a class="nav-link" href="#account">Edit Profile</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+          </div>
       </nav>
-
 
       <div class="profile-header" style="background-image: url({{ url_for('static', filename='res/iceland.jpg') }});">
         <div class="container">
@@ -72,7 +76,9 @@
               
             </h3>
             <p class="profile-header-bio">
-              <strong>{{ current_user.password }}</strong>
+              <strong class="text-secondary">{{ current_user.username }}</strong>
+              <br>
+              <strong>{{ stat }}</strong>
             </p>
           </div>
         </div>
@@ -80,10 +86,10 @@
         <nav class="profile-header-nav">
           <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
-              <a class="nav-link" href="#photos" id="pictures">Photos</a>
+              <a class="nav-link" href="#" id="pictures">Photos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#account" id="status">Account</a>
+              <a class="nav-link" href="#" id="status">Account</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#" id="timeline">Timeline</a>
@@ -104,7 +110,7 @@
             <div class="form-group">
               <div>
                 <legend class="border-bottom mb-4">
-                  Username: <strong>{{ current_user.password }}</strong>
+                  Username: <strong>{{ current_user.username }}</strong>
                 </legend>
               </div>
             </div>
@@ -191,49 +197,136 @@
 
           </fieldset>
           <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
+            {{ form.submit(class="btn btn-primary") }}
           </div>
 
         </form>
-        <ul class="nav nav-tabs justify-content-center">
-          <li class="nav-item">
-            <a class="nav-link" href="#top" id="footer">Top</a>
-          </li>
-        </ul>
       </div>
     </div>
+    
+    {% if follows %}
+    <ul class="media-list media-list-stream">
+        {% for c in follows %}
+          <br>
+          <li class="media mb-2">
+            <img
+              class="media-object d-flex align-self-start mr-3"
+              src="{{ c[6] }}"
+              width=90px height=75px>
+            <div class="media-body">
+              <strong>{{ c[1] }}<a href="{{ c[8] }}">  @{{ c[1] }}</a></strong>
+              <div class="media-body-actions">
+                <button class="btn btn-outline-primary btn-sm" id="follow"><span class="icon icon-add-user"></span> Follow</a></button>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+    </ul>
 
-    <div class="container my-4" id="photos" data-grid="images">
-      <div>
-        <img data-width="640" data-height="400" data-action="zoom" src="{{ url_for('static', filename='res/image_1.jpg') }}">
+    {% else %}
+      <div class="container my-4" id="photos" data-grid="images">
+        <div>
+          <img data-width="640" data-height="400" data-action="zoom" src="{{ url_for('static', filename='res/image_1.jpg') }}">
+        </div>
+
+        <div>
+          <img data-width="640" data-height="400" data-action="zoom" src="{{ url_for('static', filename='res/image_2.jpg') }}">
+        </div>
+
+        <div>
+          <img data-width="640" data-height="400" data-action="zoom" src="{{ url_for('static', filename='res/image_3.jpg') }}">
+        </div>
+
+        <div>
+          <img data-width="640" data-height="400" data-action="zoom" src="{{ url_for('static', filename='res/image_4.jpg') }}">
+        </div> 
+      </div>
+      <br>
+    {% endif %}
+    <div class="container my-4" id="posts">
+      <div class="col-md-4"></div>
+
+      <div class="col-md-12">
+
+        <ul class="list-group media-list media-list-stream mb-4">
+          {% if post != "None to show!" %}
+          {% for input in post %}
+
+            <li class="media list-group-item p-4">
+              <img
+                class="media-object d-flex align-self-start mr-3"
+                src="{{ current_user.profile_pic }}">
+              <div class="media-body">
+                <div class="media-heading">
+                  <small class="float-right text-dark"><strong>Posted:</strong> {{ input[3] }}</small>
+                  <h6>{{ input[1] }}</h6>
+                </div>
+
+                <p>
+                  {{ input[2] }}
+                </p>
+                
+                {% if input[4] %}
+                  <div class="media-body-inline-grid" data-grid="images">
+                    <img style="display: none" data-action="zoom" src="{{ input[4] }}">
+                  </div>
+                {% endif %}
+                
+              </div>
+            </li>
+
+          {% endfor %}
+          {% else %}
+            <div style="display:inline; align-self: center; color: gray; font-size: xx-large; margin-top: 20px">
+              {{ post }}
+            </div>
+          {% endif %}
+        </ul>
       </div>
 
-      <div>
-        <img data-width="640" data-height="400" data-action="zoom" src="{{ url_for('static', filename='res/image_1.jpg') }}">
-      </div>
-
-      <div>
-        <img data-width="640" data-height="400" data-action="zoom" src="{{ url_for('static', filename='res/image_1.jpg') }}">
-      </div>
-
-      <div>
-        <img data-width="640" data-height="400" data-action="zoom" src="{{ url_for('static', filename='res/image_4.jpg') }}">
-      </div>
     </div>
 
     <ul class="nav nav-tabs justify-content-center">
-        <li class="nav-item">
-          <a class="nav-link" href="#top" id="footer">Top</a>
-        </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#top" id="footer">Top</a>
+      </li>
     </ul>
-    <!-- 
+
     <script type="text/javascript">
       
+      // I can't believe I did this! I must've been asleep
 
-      $('#status').click(function() {
-      $('#account').toggle('slow', function() {});
-      $('#photos').toggle('slow', function() {});
+      $("#account").hide();
+      $("#posts").hide();
+      $("#photos").show();
+      
+      $(document).ready(function(){
+        $("#pictures").click(function(){
+          $("#photos").show();
+          $("#account").hide();
+          $("#posts").hide();
+
+        });
       });
 
-    </script> -->
+      $(document).ready(function(){
+        $("#status").click(function(){
+          $("#account").show();
+          $("#photos").hide();
+          $("#posts").hide();
+
+        });
+      });
+
+      $(document).ready(function(){
+        $("#timeline").click(function(){
+          $("#posts").show();
+          $("#photos").hide();
+          $("#account").hide();
+
+        });
+      });
+
+    </script>
+
 {% endblock content %}

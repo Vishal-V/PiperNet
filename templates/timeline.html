@@ -8,13 +8,17 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/home">Home</a>
+            <a class="nav-link active" href="/home">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/profile">Profile</a>
           </li>
           
-          <li class="nav-item active">
+          <li class="nav-item">
+            <a class="nav-link" href="/post/new">Create</a>
+          </li>
+
+          <li class="nav-item">
             <a class="nav-link" href="/about">About</a>
           </li>
 
@@ -44,7 +48,7 @@
 
           <li class="nav-item ml-2 avatar-list-item">
             <a class="" data-toggle="popover">
-              <img class="rounded-circle" src="{{ url_for('static', filename='res/image_1.jpg') }}">
+              <img class="rounded-circle" src="{{ current_user.profile_pic }}">
             </a>
           </li>
            
@@ -55,90 +59,302 @@
 
         <ul class="nav navbar-nav hidden-xs-up" id="js-popoverContent">
           <li class="nav-item"><a class="nav-link" href="#" data-action="growl">Notifications</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Logout</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
         </ul>
       </div>
-    </nav>
+  </nav>
 	
-	<!-- 359 -->
-    <div class="container pt-4">
-  	<div class="row">
-    <div class="col-lg-3">
-      <div class="card card-profile mb-4">
-        <div class="card-header" style="background-image: url(res/iceland.jpg);"></div>
-        <div class="card-block text-center">
-          <a href="profile.html">
-            <img
-              class="card-profile-img"
-              src="res/image_1.jpg">
-          </a>
+	
+<body class="with-top-navbar">
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="card card-profile mb-4">
+          <div class="card-header" style="background-image: url({{ url_for('static', filename='res/iceland.jpg') }});"></div>
+          <div class="card-block text-center">
+            <a href="{{ url_for('profile') }}">
+              <img
+                class="card-profile-img"
+                src="{{ current_user.profile_pic }}">
+            </a>
 
-          <h6 class="card-title">
-            <a class="text-inherit" href="profile.html">Vishal Vinod</a>
-          </h6>
+            <h6 class="card-title">
+              <a class="text-inherit" href="{{ url_for('profile') }}">{{ current_user.username }}</a>
+            </h6>
 
-          <p class="mb-4">Learn postgreSQL and use it to build the backend for the social network</p>
+            <p class="mb-4">{{ stat }}</p>
 
-          <ul class="card-menu">
-            <li class="card-menu-item">
-              <a href="#userModal" class="text-inherit" data-toggle="modal">
-                Friends
-                <h6 class="my-0">12K</h6>
-              </a>
-            </li>
+            <ul class="card-menu">
+              <li class="card-menu-item">
+                <a href="#userModal" class="text-inherit" data-toggle="modal">
+                  Friends
+                  <h6 class="my-0">{{ user_profile.friends }}</h6>
+                </a>
+              </li>
 
-            <li class="card-menu-item">
-              <a href="#userModal" class="text-inherit" data-toggle="modal">
-                Following
-                <h6 class="my-0">10</h6>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card visible-md-block visible-lg-block mb-4">
-        <div class="card-block">
-          <h6 class="mb-3">About <small>· <a href="#">Edit</a></small></h6>
-          <ul class="list-unstyled list-spaced">
-            <li><span class="text-muted icon icon-calendar mr-3"></span>Went to <a href="#">Sir MVIT</a>
-            <li><span class="text-muted icon icon-users mr-3"></span>Became friends with <a href="#">Wozniak</a>
-            <li><span class="text-muted icon icon-baidu mr-3"></span>Worked at <a href="#">Decentra</a>
-            <li><span class="text-muted icon icon-home mr-3"></span>Lives in <a href="#">Bangalore</a>
-            <li><span class="text-muted icon icon-location-pin mr-3"></span>From <a href="#">Bangalore</a>
-          </ul>
-        </div>
-      </div>
-
-       <div class="card visible-md-block visible-lg-block">
-        <div class="card-block">
-          <h6 class="mb-3">Photos <small>· <a href="#">Edit</a></small></h6>
-          <div data-grid="images" data-target-height="150">
-            <div>
-              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
-            </div>
-
-            <div>
-              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
-            </div>
-
-            <div>
-              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
-            </div>
-
-            <div>
-              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
-            </div>
-
-            <div>
-              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
-            </div>
-
-            <div>
-              <img data-width="640" data-height="640" data-action="zoom" src="res/image_2.jpg">
-            </div>
+              <li class="card-menu-item">
+                <a href="#userModal" class="text-inherit" data-toggle="modal">
+                  Following
+                  <h6 class="my-0">10</h6>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
+
+        <div class="card visible-md-block visible-lg-block mb-4">
+          <div class="card-block">
+            <h6 class="mb-3">About <small>· <a href="{{ url_for('profile') }}">Edit</a></small></h6>
+            <ul class="list-unstyled list-spaced">
+              <li><span class="text-muted icon icon-graduation-cap mr-3"></span>Went to <a href="#">Sir MVIT</a>
+              <li><span class="text-muted icon icon-calendar mr-3"></span>Aged {{ user_profile.age }}
+              <li><span class="text-muted icon icon-users mr-3"></span>Became friends with {{ user_profile.friends }} users
+              <li><span class="text-muted icon icon-baidu mr-3"></span>Worked at <a href="#">Decentra</a>
+              <li><span class="text-muted icon icon-home mr-3"></span>Lives in <a href="#">{{ user_profile.lives_in }}</a>
+              <li><span class="text-muted icon icon-location-pin mr-3"></span>From <a href="#">{{ user_profile.place }}</a>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card visible-md-block visible-lg-block">
+          <div class="card-block">
+            <h6 class="mb-3">Photos <small>· <a href="#">Edit</a></small></h6>
+            <div data-grid="images" data-target-height="150">
+              <div>
+                <img data-width="640" data-height="640" data-action="zoom" src="{{ url_for('static', filename='res/image_1.jpg') }}">
+              </div>
+
+              <div>
+                <img data-width="640" data-height="640" data-action="zoom" src="{{ url_for('static', filename='res/image_2.jpg') }}">
+              </div>
+
+              <div>
+                <img data-width="640" data-height="640" data-action="zoom" src="{{ url_for('static', filename='res/image_3.jpg') }}">
+              </div>
+
+              <div>
+                <img data-width="640" data-height="640" data-action="zoom" src="{{ url_for('static', filename='res/image_4.jpg') }}">
+              </div>
+
+              <div>
+                <img data-width="640" data-height="640" data-action="zoom" src="{{ url_for('static', filename='res/iceland.jpg') }}">
+              </div>
+
+              <div>
+                <img data-width="640" data-height="640" data-action="zoom" src="{{ url_for('static', filename='res/image_1.jpg') }}">
+              </div>
+            </div>
+
+        </div>
+
+
+        </div>
+        <!-- <form action="{{ url_for('delete') }}">
+          <input value="Delete Account" class="btn-danger" type="button" name="delete">
+        </form> -->
+      </div>
+
+      <div class="col-lg-6">
+
+        <ul class="list-group media-list media-list-stream mb-4">
+
+          <li class="media list-group-item p-4">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Message" id="status_update">
+              <div class="input-group-btn">
+                <script>
+                  function quickPost(){
+                      var elem = document.getElementById("status_update");
+                      $.ajax({
+                          url: '/post/quick',
+                          contentType: 'application/json',
+                          dataType: 'json',
+                          type: 'POST',
+                          data: JSON.stringify({
+                              'content': elem.value
+                          }),
+                          success: location.reload(true)
+                      })
+                  }
+                </script>
+                <button type="button" class="btn btn-secondary" onclick="quickPost()">
+                  <span class="icon icon-upload"></span>
+                </button>
+              </div>
+            </div>
+          </li>
+
+          {% if post != "None to show!" %}
+          {% for input,senti in vals %}
+            <script>
+              console.log("{{ input[8] }}", "{{ input[9] }}");
+            </script>
+            <li class="media list-group-item p-4" style="margin-top: 15px;">
+              <img
+                class="media-object d-flex align-self-start mr-3"
+                src="{{ input[5] }}">
+              <div class="media-body">
+                <div class="media-heading">
+                  <small class="float-right text-dark"><strong>Posted:</strong> {{ input[3] }}</small>
+                  <h6>{{ input[1] }}</h6>
+                  
+                  <small class="float-right text-dark"><strong>Sentiment:</strong> {{ senti[0] }} ({{ senti[1] }})</small>
+                  <br>
+
+                </div>
+
+                <p>
+                  {{ input[2] }}
+                </p>
+
+                {% if input[4] %}
+                  <div class="media-body-inline-grid" data-grid="images">
+                    <img style="display: none" data-width="640" data-height="440" data-action="zoom" src="{{ input[4] }}">
+                  </div>
+                {% endif %}
+
+              </div>
+
+              {% if comments != "None" %}
+              {% for comment in comments %}
+                {% if comment[2]==input[7] %}
+                <li class="media list-group-item" style="padding: 2%">
+                  <div>
+                    {{ comment[0] }}: {{ comment[1] }}
+                  </div>
+                </li>
+                {% endif %}
+              {% endfor %}
+              {% endif %}
+              <li class="media list-group-item" style="padding: 2%" id="{{ input[0] }}_{{ input[7] }}">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Add Comment" name="commentBox">
+                  <div class="input-group-btn">
+                    <script id="commentScript">
+                      function comment(super_li){
+                        var elem = super_li.children[0].children[0];
+                        var parts = super_li.id.split("_");
+                        $.ajax({
+                            url: '/comment',
+                            contentType: 'application/json',
+                            dataType: 'json',
+                            type: 'POST',
+                            data: JSON.stringify({
+                              'username': parts[0],
+                              'content': elem.value,
+                              'post_id': parts[1]
+                            })
+                        });
+                      }
+                    </script>
+                    <button type="button" class="btn btn-secondary" onclick="comment(this.parentElement.parentElement.parentElement)">
+                      <span class="icon icon-upload"></span>
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </li>
+          {% endfor %}
+          {% else %}
+            <div style="display:inline; align-self: center; color: gray; font-size: xx-large; margin-top: 40%">
+              {{ post }}
+            </div>
+          {% endif %}
+        </ul>
+      </div>
+      <div class="col-lg-3">
+        <div class="alert alert-warning alert-dismissible hidden-md-down" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <a class="alert-link" href="{{ url_for('profile') }}">Visit your profile!</a>
+        </div>
+
+        <div class="card mb-4 hidden-md-down">
+          <div class="card-block">
+            <h6 class="mb-3">Sponsored Ad</h6>
+            <div data-grid="images" data-target-height="150">
+              <img class="media-object" data-width="640" data-height="640" data-action="zoom" src="{{ url_for('static', filename='res/iceland.jpg') }}">
+            </div>
+            <p>Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Sed posuere consectetur est at lobortis.</p>
+            <button class="btn btn-outline-primary btn-sm">Advertisement</button>
+          </div>
+        </div>
+
+        <div class="card mb-4 hidden-md-down">
+          <div class="card-block">
+            <h6 class="mb-3">Likes <small>· <a href="#">View All</a></small></h6>
+
+            <ul class="media-list media-list-stream">
+            {% if celebs %}
+              {% for c in celebs %}
+                <br>
+                  <li class="media mb-2">
+                    <img
+                      class="media-object d-flex align-self-start mr-3"
+                      src="{{ c[6] }}"
+                      width=90px height=75px>
+                    <div class="media-body">
+                      <strong>{{ c[1] }}<a href="{{ c[8] }}">  @{{ c[1] }}</a></strong>
+                      <div class="media-body-actions">
+                        <button class="btn btn-outline-primary btn-sm" id="follow"><span class="icon icon-add-user"></span> Follow</a></button>
+                      </div>
+                    </div>
+                  </li>
+                  
+                
+              {% endfor %}
+            {% endif %}
+            </ul>
+          </div>
+
+        <div class="card mb-4 hidden-md-down">
+          <div class="card-block">
+            You have lots of pending notifications!
+          </div>
+        </div>
+
       </div>
     </div>
+  </div>
+
+  <div class="login100-form-btn fixed-bottom new-post-alert"
+       onmouseover="document.body.style.cursor='pointer';"
+       onmouseout="document.body.style.cursor='default';"
+       onclick="location.reload(true);
+                window.onbeforeunload = function () {
+                    window.scrollTo(0, 0);
+                }
+               ">
+  </div>
+</body>
+<script>
+    var postCount = 0;
+
+    var newPostNotifier = document.getElementsByClassName("new-post-alert")[0];
+    newPostNotifier.innerHTML = postCount.toString();
+
+
+    var socket = io.connect( window.location.hostname + ':5000');
+    // alert(window.location.hostname);
+    socket.on('comment', function (msg) {
+        console.log("reached");
+        var jsn = $.parseJSON(msg);
+        var id = jsn['username']+'_'+jsn['post_id'];
+        var elem =
+            "<li class=\"media list-group-item\" style=\"padding: 2%\">" +
+            "<div>" +
+            jsn['posted_by'] + ": " + jsn['content']+
+            "</div>" +
+            "</li>";
+        document.getElementById(id).insertAdjacentHTML('beforebegin', elem);
+        console.log(id);
+    });
+
+     socket.on('newPost', function (msg) {
+        postCount++;
+        newPostNotifier.innerHTML = postCount.toString();
+    });
+</script>
 {% endblock content %}
+
+
+

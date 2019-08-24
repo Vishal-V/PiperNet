@@ -1,0 +1,14 @@
+{% extends "html/layout.html" %}
+{% block content %}
+	<ul class="media-list">
+      <li class="media">
+        <img
+          class="media-object d-flex align-self-start mr-3"
+          src="{{ current_user.profile_pic }}">
+        <div class="media-body">
+          <strong>Comment</strong>
+          Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Sed posuere consectetur est at lobortis.
+        </div>
+      </li>
+    </ul>
+{% endblock content %}

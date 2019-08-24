@@ -1,12 +1,9 @@
-/* navbar */
 .app-navbar {
   font-weight: 500;
   letter-spacing: .05em;
   position: absolute;
 }
 
-
-/* header block */
 .app-graph {
   width: 150%;
   position: absolute;
@@ -20,19 +17,6 @@
   }
 }
 
-
-/* iphone block */
-.app-iphone-block {
-  padding-bottom: 60px;
-}
-@media (min-width: 768px) {
-  .app-iphone-block {
-    padding-bottom: 0;
-  }
-}
-
-
-/* code block */
 .app-code-block {
   background-color: #262F36;
   overflow: hidden;
@@ -63,14 +47,10 @@
   }
 }
 
-
-/* pull quote block */
 .app-high-praise img {
   width: 100%;
 }
 
-
-/* brand ribbon block */
 .app-ribbon {
   background: #2595FF;
 }
@@ -83,8 +63,6 @@
   margin: 0 10px 30px;
 }
 
-
-/* marketing grid block */
 .app-block-marketing-grid .container {
   margin-bottom: -60px;
 }
@@ -97,8 +75,6 @@
   }
 }
 
-
-/* price plan block */
 .app-price-plans {
   background-color: #F4F5F6;
 }
@@ -106,8 +82,6 @@
   margin-bottom: -60px;
 }
 
-
-/* footer block */
 .app-footer {
   background-color: #262F36;
 }
@@ -115,8 +89,6 @@
   color: #fff;
 }
 
-
-/* general block overrrides */
 @media (max-width: 768px) {
   .block .lead {
     line-height: 1.3;
@@ -126,8 +98,6 @@
   }
 }
 
-
-/* general inverse overrides */
 .block-inverse .text-muted {
   color: rgba(255, 255, 255, .7) !important;
 }
@@ -135,8 +105,6 @@
   background-color: transparent;
 }
 
-
-/* general btn overrides */
 .btn-lg {
   font-size: 18px;
 }
@@ -152,8 +120,6 @@
   }
 }
 
-
-/* ie10+ */
 @media (min-width: 768px) {
   .app-align-center {
     display: flex;

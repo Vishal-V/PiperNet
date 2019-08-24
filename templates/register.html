@@ -1,14 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
 
-	<div class="col-md-4"></div>
-	<div class="container col-md-4">
-		<div class="content-section">
-			<br><br><br>
+	<div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100">
+      <div class="login100-pic js-tilt" data-tilt>
+          <img src="{{ url_for('static', filename='res/Foundation2.jpg') }}" alt="IMG" class="image">
+        </div>
+        <script >
+          $('.js-tilt').tilt({
+            scale: 1.25
+          })
+        </script>
+
 			<form method="POST" action="register">
 				{{ form.hidden_tag() }}
 				<fieldset class="form-group">
-					<legend class="border-bottom mb-4">
+					<legend class="border-bottom mb-4 text-center">
 						Sign Up
 					</legend>
 					<div class="form-group">
@@ -67,17 +75,21 @@
 						{% endif %}
 					</div>
 
+					<div class="container-login100-form-btn">
+           			 {{ form.submit(class="login100-form-btn") }}
+          			</div>
+					
+					<div class="border-top text-center p-t-15">
+						<small class="text-dark txt2">
+							Already registered? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+						</small>
+					</div>
 				</fieldset>
-				<div class="form-group">
-					{{ form.submit(class="btn btn-outline-info") }}
-				</div>
+				
 			</form>
+			
 		</div>
-		<div class="border-top">
-			<small class="text-dark">
-				Already registered? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
-			</small>
-		</div>
+		
 	</div>
 
 {% endblock content %}
